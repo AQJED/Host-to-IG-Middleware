@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host to IG Middleware Project</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-p1TfIh6V+7Wn/dF1WqKz7AGGgKf6EM3mYb+2L1G9OOV3mWc8H5KQFvcN4l+6LJ1qv1pU5jv7uPNq9vT+XQvSBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* Base styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: 'Poppins', sans-serif; color: #e0e0e0; background-color: #0f0f0f; line-height: 1.6; }
+
+    /* Fullscreen Header */
+    header { position: relative; width: 100%; height: 100vh; background: url('background.jpg') no-repeat center center/cover; display: flex; align-items: center; justify-content: center; }
+    header::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,15,15,0.6); }
+    .header-content { position: relative; z-index: 1; padding: 2rem; width: 80%; max-width: 1000px; text-align: center; }
+    .header-content h1 { font-size: 3rem; font-weight: 600; color: #ffffff; }
+    .header-content p { font-size: 1.25rem; color: #cccccc; margin-top: 0.5rem; }
+
+    /* Main content container */
+    main { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
+    h2 { font-size: 2rem; margin-bottom: 1rem; font-weight: 600; color: #f0f0f0; }
+    p { margin-bottom: 1rem; font-size: 1rem; color: #d0d0d0; }
+    ul { margin-bottom: 1.5rem; padding-left: 1.25rem; }
+    ul li { margin-bottom: 0.5rem; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+    th, td { padding: 0.75rem 1rem; border: 1px solid #2c2c2c; }
+    th { background-color: #1a1a1a; color: #ffffff; text-align: left; }
+    td { background-color: #141414; color: #cccccc; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content h1 { font-size: 2.5rem; }
+      .header-content { width: 90%; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <div class="header-content">
+      <h1>Host to IG Middleware Project</h1>
+      <p>Convert CIGI 3.1 Packets into CIGI 3.3 for AECHLON IG</p>
+      <p>This middleware application facilitates communication between a Host Computer and an Image Generator by converting CIGI 3.1 packets into CIGI 3.3 packets.</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>This project is a middleware application that facilitates communication between a Host Computer and an Image Generator (IG) by converting CIGI 3.1 packets into CIGI 3.3 packets.</p>
+    </section>
+
+    <section id="system-architecture">
+      <h2>System Architecture</h2>
+      <ul>
+        <li><strong>Capture CIGI Packets from Host Computer</strong>
+          <ul>
+            <li>The Host Computer sends CIGI 3.1 packets.</li>
+            <li>These packets are captured and processed.</li>
+          </ul>
+        </li>
+        <li><strong>Store Data in Shared Memory</strong>
+          <ul>
+            <li>The CIGI 3.1 packets are written into a shared memory buffer.</li>
+            <li>Each packet is marked with a flag to indicate whether it is ready to be processed.</li>
+          </ul>
+        </li>
+        <li><strong>Read Data from Shared Memory</strong>
+          <ul>
+            <li>The middleware continuously checks for available packets in shared memory.</li>
+            <li>Once a packet is ready, it is retrieved for processing.</li>
+          </ul>
+        </li>
+        <li><strong>Convert CIGI 3.1 to CIGI 3.3</strong>
+          <ul>
+            <li>The CIGI 3.1 packet is parsed using the CIGI CCL library.</li>
+            <li>The corresponding CIGI 3.3 packet is constructed with updated parameters.</li>
+          </ul>
+        </li>
+        <li><strong>Send CIGI 3.3 Packets to IG</strong>
+          <ul>
+            <li>The converted CIGI 3.3 packets are sent to the AECHLON IG using Boost.Asio for TCP/UDP communication.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section id="libraries-used">
+      <h2>Libraries Used</h2>
+      <ul>
+        <li>CIGI CCL – Handling CIGI packet structures and conversions</li>
+        <li>Boost.Interprocess – Shared memory management</li>
+        <li>Boost.Asio – Network communication (TCP/UDP)</li>
+      </ul>
+    </section>
+
+    <section id="requirements">
+      <h2>Hardware and Software Requirements</h2>
+      <ul>
+        <li><strong>Hardware:</strong>
+          <ul>
+            <li>Host Computer – Sends CIGI 3.1 packets</li>
+            <li>Cisco Switch – Connects the Host and IG to the middleware</li>
+            <li>AECHLON Image Generator (IG) – Receives CIGI 3.3 packets</li>
+          </ul>
+        </li>
+        <li><strong>Software:</strong>
+          <ul>
+            <li>C++ Application (Middleware) – No additional software tools or frameworks required</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section id="key-features">
+      <h2>Key Features</h2>
+      <ul>
+        <li>Protocol Upgrade: Converts CIGI 3.1 packets to CIGI 3.3</li>
+        <li>Efficient Shared Memory Handling: Uses Boost.Interprocess to manage packet buffering</li>
+        <li>Real-time Network Communication: Uses Boost.Asio for TCP/UDP transmission</li>
+      </ul>
+    </section>
+
+    <section id="data-flow">
+      <h2>Data Flow Diagram</h2>
+      <ul>
+        <li>Host Computer (CIGI 3.1 Packets)</li>
+        <li>↓ Shared Memory (Boost)</li>
+        <li>↓ Middleware (CIGI 3.1 to CIGI 3.3 Conversion)</li>
+        <li>↓ Boost.Asio (CIGI Packet Transmission)</li>
+        <li>↓ AECHLON IG (CIGI 3.3 Packets Rendered)</li>
+      </ul>
+    </section>
+
+    <section id="future-enhancements">
+      <h2>Future Enhancements</h2>
+      <ul>
+        <li>Support for additional CIGI packet types</li>
+        <li>Improved performance for high-frequency updates</li>
+        <li>Integration of logging and debugging tools</li>
+      </ul>
+    </section>
+
+    <section id="conclusion">
+      <h2>Conclusion</h2>
+      <p>This middleware bridges the gap between Host and IG by efficiently processing and upgrading CIGI 3.1 packets into CIGI 3.3 format. The solution is designed for real-time simulation environments, ensuring seamless integration with the AECHLON IG.</p>
+    </section>
+
+    <section id="author">
+      <h2>Author</h2>
+      <p>Adeeb Alqahtani</p>
+      <p>
+        <a href="https://theadeeb.com">theadeeb.com</a> |
+        <a href="https://www.linkedin.com/in/adalqahtani">LinkedIn</a>
+      </p>
+    </section>
+  </main>
+
+</body>
+</html>
